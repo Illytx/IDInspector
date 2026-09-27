@@ -1,4 +1,4 @@
-# 🔍 IDInspector
+# IDInspector
 
 [![BetterDiscord Plugin](https://img.shields.io/badge/BetterDiscord-Plugin-5865F2?style=flat-square&logo=discord&logoColor=white)](https://betterdiscord.app/)
 [![Version](https://img.shields.io/badge/version-1.1.8-blue?style=flat-square)](https://github.com/Illytx/IDInspector)
@@ -8,7 +8,7 @@ A lightweight BetterDiscord plugin that adds a direct context menu option to ins
 
 ---
 
-## ✨ Features
+## Features
 
 - **One-Click Inspection**: Right-click any user in a chat or member list and select **Inspect User ID**.
 - **Accurate Timestamps**: Automatically calculates account creation date and exact UTC time from the user's snowflake ID.
@@ -18,7 +18,7 @@ A lightweight BetterDiscord plugin that adds a direct context menu option to ins
 
 ---
 
-## 📥 Installation
+## Installation
 
 1. Make sure you have [BetterDiscord](https://betterdiscord.app/) installed.
 2. Download [`IDInspector.plugin.js`](https://raw.githubusercontent.com/Illytx/IDInspector/main/IDInspector.plugin.js) (right-click the link and choose **"Save link as..."**).
@@ -30,7 +30,7 @@ A lightweight BetterDiscord plugin that adds a direct context menu option to ins
 
 ---
 
-## 🛠️ Usage
+## Usage
 
 1. Right-click on any user profile or chat message.
 2. Select **Inspect User ID** from the context menu.
@@ -38,6 +38,6 @@ A lightweight BetterDiscord plugin that adds a direct context menu option to ins
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the [MIT License](LICENSE).
