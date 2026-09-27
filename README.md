@@ -1,3 +1,4 @@
+<img width="762" height="428" alt="preview" src="https://github.com/user-attachments/assets/ac6c1e21-a632-484a-b469-a5cbf11e07a3" />
 # IDInspector
 
 [![BetterDiscord Plugin](https://img.shields.io/badge/BetterDiscord-Plugin-5865F2?style=flat-square&logo=discord&logoColor=white)](https://betterdiscord.app/)
