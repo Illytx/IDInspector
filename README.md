@@ -21,7 +21,7 @@ A lightweight BetterDiscord plugin that adds a direct context menu option to ins
 ## 📥 Installation
 
 1. Make sure you have [BetterDiscord](https://betterdiscord.app/) installed.
-2. Download [`IDInspector.plugin.js`](https://raw.githubusercontent.com/Illytx/IDInspector/main/IDInspector.plugin.js).
+2. Download [`IDInspector.plugin.js`](https://raw.githubusercontent.com/Illytx/IDInspector/main/IDInspector.plugin.js) (right-click the link and choose **"Save link as..."**).
 3. Open your BetterDiscord plugins folder:
    - In Discord, go to **User Settings** $\rightarrow$ **Plugins** (under *BetterDiscord*).
    - Click **Open Plugins Folder** at the top.
