@@ -1,2 +1,3 @@
 IDInspector.plugin.js linguist-language=C# -linguist-generated
 *.plugin.js linguist-language=C# -linguist-generated
+#this is just so that github shows the language, not related or important at all
