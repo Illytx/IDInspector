@@ -1,3 +1,9 @@
 #this is also not important, also thank you for being born
-// Discord helper runtime
-console.log("Plugin loaded");
+/*
+==================================================
+JAVASCRIPT CORE RUNTIME
+==================================================
+*/
+function init() {
+    console.log("Core JS active");
+}
