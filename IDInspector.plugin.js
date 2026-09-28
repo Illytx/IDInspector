@@ -1,7 +1,7 @@
 /**
  * @name IDInspector
  * @author datae
- * @description Inspect user details and download avatars/banners (One-time startup notice).
+ * @description Inspect user details and download avatars/banners.
  * @version 1.1.8
  */
 
