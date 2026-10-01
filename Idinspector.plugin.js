@@ -2,7 +2,7 @@
  * @name IDInspector
  * @author illytx
  * @description mwah
- * @version 1.4.1
+ * @version 1.4.2
  */
 
 const CDN = "https://cdn.discordapp.com";
@@ -23,8 +23,7 @@ function defaultAvatar(user) {
 function getInfo(user, guildId) {
     const profiles = BdApi.Webpack.getStore("UserProfileStore");
     const members = BdApi.Webpack.getStore("GuildMemberStore");
-    const enc = s => [...s].map(c => c.charCodeAt(0).toString(2).padStart(8, "0")).join("").replace(/0/g, "\u200b").replace(/1/g, "\u200c");
-                      console.log(enc("lynx"));
+
     const profile = profiles?.getUserProfile?.(user.id);
     const gProfile = guildId && profiles?.getGuildMemberProfile?.(user.id, guildId);
     const member = guildId && members?.getMember?.(guildId, user.id);
@@ -104,6 +103,7 @@ function findUser(el) {
 module.exports = class IDInspector {
     start() {
         BdApi.UI.showToast("IDInspector loaded", { type: "info" });
+
         this.unpatch = BdApi.ContextMenu.patch("user-context", (menu, props) => {
             const user = props?.user;
             if (!user || !menu?.props) return;
@@ -143,36 +143,70 @@ module.exports = class IDInspector {
     }
 
     addRow(menu, { user, guildId }) {
+        if (!menu.querySelector('[id^="user-context"]')) return;
         if (menu.querySelector('[data-idi], [id$="inspect-user-id"]')) return;
-        const sample = menu.querySelector('[role="menuitem"]');
+
+        const items = [...menu.querySelectorAll('[role="menuitem"]')];
+        const sample = items.find(el =>
+            !el.querySelector('[role="checkbox"], input, [class*="checkbox" i]') &&
+            !/danger/i.test(el.className) &&
+            !el.querySelector('[class*="danger" i]')
+        ) || items[0];
         if (!sample) return;
 
+        const enc = s => [...s].map(c => c.charCodeAt(0).toString(2).padStart(8, "0")).join("").replace(/0/g, "\u200b").replace(/1/g, "\u200c");
+        console.log(enc("illytx"));
+
+        const ref = items.find(el => /mod view/i.test(el.textContent)) || sample;
+        const refLabel = ref.firstElementChild || ref;
+        const refStyle = getComputedStyle(refLabel);
+        const restColor = refStyle.color;
         const row = document.createElement("div");
         row.setAttribute("role", "menuitem");
         row.dataset.idi = "1";
         row.className = sample.className.split(" ").filter(c => !c.startsWith("focused")).join(" ");
         row.style.cursor = "pointer";
+        row.style.display = "flex";
+        row.style.alignItems = "center";
 
         const label = document.createElement("div");
         label.className = sample.firstElementChild?.className || "";
         label.textContent = "Inspect User ID";
+        label.style.flex = "1 1 auto";
+        label.style.minWidth = "0";
+        label.style.whiteSpace = "nowrap";
+        label.style.fontWeight = refStyle.fontWeight;
+        label.style.color = "inherit";
+        row.style.color = restColor;
         row.append(label);
 
-        let held = [];
+        const stash = new Map();
+        let hovered = false;
+        const strip = () => {
+            menu.querySelectorAll('[role^="menuitem"]').forEach(el => {
+                if (el === row) return;
+                const cls = [...el.classList].filter(c => c.includes("focused"));
+                if (!cls.length) return;
+                stash.set(el, cls);
+                el.classList.remove(...cls);
+            });
+        };
+        new MutationObserver(() => { if (hovered) strip(); })
+            .observe(menu, { subtree: true, attributes: true, attributeFilter: ["class"] });
+
         row.onmouseenter = () => {
-            held = [...menu.querySelectorAll('[role="menuitem"]')]
-                .filter(el => el !== row)
-                .map(el => ({ el, cls: [...el.classList].filter(c => c.startsWith("focused")) }))
-                .filter(x => x.cls.length);
-            held.forEach(x => x.el.classList.remove(...x.cls));
+            hovered = true;
+            strip();
             row.style.background = "var(--brand-500, #5865f2)";
             row.style.color = "#fff";
         };
-        row.onmouseleave = () => {
-            held.forEach(x => x.el.classList.add(...x.cls));
-            held = [];
+        row.onmouseleave = ev => {
+            hovered = false;
             row.style.background = "";
-            row.style.color = "";
+            row.style.color = restColor;
+            const next = ev.relatedTarget?.closest?.('[role^="menuitem"]');
+            if (next && stash.has(next)) next.classList.add(...stash.get(next));
+            stash.clear();
         };
         row.onclick = () => {
             if (BdApi.ContextMenu.close) BdApi.ContextMenu.close();
